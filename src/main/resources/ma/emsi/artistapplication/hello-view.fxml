@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.GridPane?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+
+<?import javafx.scene.control.Button?>
+<!--<VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"-->
+<!--      fx:controller="ma.emsi.artistapplication.HelloController">-->
+<!--    <padding>-->
+<!--        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>-->
+<!--    </padding>-->
+
+<!--    <Label fx:id="welcomeText"/>-->
+<!--    <Button text="Hello!" onAction="#onHelloButtonClick"/>-->
+<!--</VBox>-->
+
+
+<?import javafx.scene.control.DatePicker?>
+<VBox alignment="CENTER" prefHeight="356.0" prefWidth="332.0" spacing="20.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ma.emsi.artistapplication.HelloController">
+
+    <Label text="Nom:" />
+    <TextField fx:id="nomTextField" />
+
+    <Label text="Prénom:" />
+    <TextField fx:id="prenomTextField" />
+
+    <Label text="Date de Naissance:" />
+    <DatePicker fx:id="dateNaissancePicker" />
+
+    <Label text="Pseudo/Nom:" />
+    <TextField fx:id="pseudoNomTextField" />
+
+    <Label text="Est Mort:" />
+    <TextField fx:id="estMortTextField" />
+
+    <Label text="Pays d'Origine:" />
+    <TextField fx:id="paysOrigineTextField" />
+
+    <Label text="Adresse:" />
+    <TextField fx:id="adresseTextField" />
+
+    <Button onAction="#onHelloButtonClick" text="Ajouter" />
+    <Button onAction="#onAnnulerButtonClick" text="Annuler" />
+
+    <Label fx:id="welcomeText" />
+</VBox>
