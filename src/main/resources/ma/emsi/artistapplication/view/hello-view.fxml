@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.GridPane?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+
+<?import javafx.scene.control.Button?>
+
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.RadioButton?>
+<VBox alignment="CENTER" prefHeight="356.0" prefWidth="332.0" spacing="20.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.fxml/1" fx:controller="ma.emsi.artistapplication.view.HelloController">
+
+    <GridPane>
+        <Label GridPane.columnIndex="0" GridPane.rowIndex="0" text="Nom:" />
+        <TextField GridPane.columnIndex="1" GridPane.rowIndex="0" fx:id="nomTextField" />
+
+        <Label GridPane.columnIndex="0" GridPane.rowIndex="1" text="Prénom:" />
+        <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" fx:id="prenomTextField" />
+
+        <Label GridPane.columnIndex="0" GridPane.rowIndex="2" text="Date de Naissance:" />
+        <DatePicker GridPane.columnIndex="1" GridPane.rowIndex="2" fx:id="dateNaissancePicker" />
+
+        <Label GridPane.columnIndex="0" GridPane.rowIndex="3" text="Pseudo/Nom:" />
+        <TextField GridPane.columnIndex="1" GridPane.rowIndex="3" fx:id="pseudoNomTextField" />
+
+        <Label GridPane.columnIndex="0" GridPane.rowIndex="4" text="Est Mort:" />
+        <RadioButton GridPane.columnIndex="1" GridPane.rowIndex="4" fx:id="estMortRadioButton"/>
+
+        <Label GridPane.columnIndex="0" GridPane.rowIndex="5" text="Pays d'Origine:" />
+        <TextField GridPane.columnIndex="1" GridPane.rowIndex="5" fx:id="paysOrigineTextField" />
+
+        <Label GridPane.columnIndex="0" GridPane.rowIndex="6" text="Adresse:" />
+        <TextField GridPane.columnIndex="1" GridPane.rowIndex="6" fx:id="adresseTextField" />
+    </GridPane>
+    <VBox alignment="CENTER">
+        <Button onAction="#onHelloButtonClick" text="Ajouter" />
+        <Button onAction="#onAnnulerButtonClick" text="Annuler" />
+    </VBox>
+    <VBox alignment="BOTTOM_LEFT">
+        <Button onAction="#onClickExportData" text="Exporter" />
+        <Button onAction="#onClickEImporterData" text="Importer" />
+    </VBox>
+
+    <Label fx:id="welcomeText" />
+</VBox>
+
+
+
+
+

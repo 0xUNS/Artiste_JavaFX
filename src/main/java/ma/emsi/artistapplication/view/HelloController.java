@@ -1,5 +1,6 @@
-package ma.emsi.artistapplication;
+package ma.emsi.artistapplication.view;
 
+import javafx.scene.control.RadioButton;
 import ma.emsi.artistapplication.entities.Artiste;
 import ma.emsi.artistapplication.service.ArtisteService;
 
@@ -7,19 +8,10 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
+import ma.emsi.artistapplication.xssf.SpreadsheetRead;
+import ma.emsi.artistapplication.xssf.SpreadsheetWrite;
+
 import java.time.LocalDate;
-import java.util.Date;
-
-
-//public class HelloController {
-//    @FXML
-//    private Label welcomeText;
-//
-//    @FXML
-//    protected void onHelloButtonClick() {
-//        welcomeText.setText("Welcome to JavaFX Application!");
-//    }
-//}
 
 public class HelloController {
     @FXML
@@ -31,7 +23,7 @@ public class HelloController {
     @FXML
     private TextField pseudoNomTextField;
     @FXML
-    private TextField estMortTextField;
+    private RadioButton estMortRadioButton;
     @FXML
     private TextField paysOrigineTextField;
     @FXML
@@ -50,7 +42,7 @@ public class HelloController {
         String prenom = prenomTextField.getText();
         LocalDate dateNaissance = dateNaissancePicker.getValue();
         String pseudoNom = pseudoNomTextField.getText();
-        boolean estMort = Boolean.parseBoolean(estMortTextField.getText());
+        boolean estMort = estMortRadioButton.isSelected();
         String paysOrigine = paysOrigineTextField.getText();
         String adresse = adresseTextField.getText();
 
@@ -77,8 +69,16 @@ public class HelloController {
         prenomTextField.clear();
         dateNaissancePicker.setValue(null);
         pseudoNomTextField.clear();
-        estMortTextField.clear();
+        estMortRadioButton.setSelected(false);
         paysOrigineTextField.clear();
         adresseTextField.clear();
+    }
+    @FXML
+    private void onClickExportData() throws Exception {
+        SpreadsheetWrite.export();
+    }
+    @FXML
+    private void onClickEImporterData() throws Exception {
+        SpreadsheetRead.importer();
     }
 }

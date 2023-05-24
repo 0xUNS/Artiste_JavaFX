@@ -30,13 +30,13 @@ public class SpreadsheetRead {
 			System.out.println();
 		}
 	}
-	public static void main(String[] args) throws Exception {
+	public static void importer() throws Exception {
 		try(FileInputStream fis = new FileInputStream(new File("src/main/resources/Data.xlsx")))
 		{
 			XSSFWorkbook workbook = new XSSFWorkbook(fis);
-			System.out.println("-- TABLEAU --");
-			sheetRead(workbook, 0);
 			System.out.println("-- ARTISTE --");
+			sheetRead(workbook, 0);
+			System.out.println("-- TABLEAU --");
 			sheetRead(workbook, 1);
 		}
 		catch (FileNotFoundException e) {
@@ -45,5 +45,8 @@ public class SpreadsheetRead {
 		catch (IOException e) {
 			// TODO: handle exception
 		}
+	}
+	public static void main(String[] args) throws Exception {
+		SpreadsheetRead.importer();
 	}
 }

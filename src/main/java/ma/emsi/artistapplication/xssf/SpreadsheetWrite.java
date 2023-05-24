@@ -2,7 +2,6 @@ package ma.emsi.artistapplication.xssf;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Arrays;
@@ -93,15 +92,17 @@ public class SpreadsheetWrite {
 			cell.setCellValue(artiste.getAdresse());
 		}
 	}
-	public static void main(String[] args) throws Exception {
-
+	public static void export() throws Exception {
 		XSSFWorkbook workbook = new XSSFWorkbook();
 
-		tableauWrite(workbook);
 		artisteWrite(workbook);
+		tableauWrite(workbook);
 
 		FileOutputStream out = new FileOutputStream(new File("src/main/resources/Data.xlsx"));
 		workbook.write(out);
 		out.close();
+	}
+	public static void main(String[] args) throws Exception {
+		SpreadsheetWrite.export();
 	}
 }

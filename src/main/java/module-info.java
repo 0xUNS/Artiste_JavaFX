@@ -8,4 +8,6 @@ module ma.emsi.artistapplication {
 
     opens ma.emsi.artistapplication to javafx.fxml;
     exports ma.emsi.artistapplication;
+    opens ma.emsi.artistapplication.view to javafx.fxml;
+    exports ma.emsi.artistapplication.view;
 }
