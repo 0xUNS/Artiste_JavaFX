@@ -1,4 +1,4 @@
-package ma.emsi.artistapplication.xssf;
+package ma.emsi.artistapplication.service;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -30,8 +30,8 @@ public class SpreadsheetRead {
 			System.out.println();
 		}
 	}
-	public static void importer() throws Exception {
-		try(FileInputStream fis = new FileInputStream(new File("src/main/resources/Data.xlsx")))
+	public static void importer(String path) throws Exception {
+		try(FileInputStream fis = new FileInputStream(new File("/home/abc/" + path)))
 		{
 			XSSFWorkbook workbook = new XSSFWorkbook(fis);
 			System.out.println("-- ARTISTE --");
@@ -47,6 +47,5 @@ public class SpreadsheetRead {
 		}
 	}
 	public static void main(String[] args) throws Exception {
-		SpreadsheetRead.importer();
 	}
 }

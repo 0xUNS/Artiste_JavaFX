@@ -1,8 +1,10 @@
-package ma.emsi.artistapplication.xssf;
+package ma.emsi.artistapplication.service;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Arrays;
 
@@ -92,17 +94,16 @@ public class SpreadsheetWrite {
 			cell.setCellValue(artiste.getAdresse());
 		}
 	}
-	public static void export() throws Exception {
+	public static void export(String path) throws Exception {
 		XSSFWorkbook workbook = new XSSFWorkbook();
 
 		artisteWrite(workbook);
 		tableauWrite(workbook);
 
-		FileOutputStream out = new FileOutputStream(new File("src/main/resources/Data.xlsx"));
+		FileOutputStream out = new FileOutputStream(new File("/home/abc/" + path));
 		workbook.write(out);
 		out.close();
 	}
 	public static void main(String[] args) throws Exception {
-		SpreadsheetWrite.export();
 	}
 }

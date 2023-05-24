@@ -3,6 +3,7 @@ package ma.emsi.artistapplication.view;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import ma.emsi.artistapplication.entities.Artiste;
+import ma.emsi.artistapplication.service.ArtisteService;
 import ma.emsi.artistapplication.service.ArtisteTableUtil;
 import javafx.application.Application;
 import javafx.collections.ObservableList;
@@ -10,6 +11,8 @@ import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Date;
 
@@ -17,6 +20,7 @@ import javafx.scene.layout.HBox;
 import static javafx.scene.control.TableView.TableViewSelectionModel;
 
 public class TableViewAddDeleteRows extends Application {
+	private static ArtisteService artisteService = new ArtisteService();
 	// Fields to add Artiste details
 	private final TextField nomTextField = new TextField();
 	private final TextField prenomTextField = new TextField();
@@ -25,6 +29,7 @@ public class TableViewAddDeleteRows extends Application {
 	private final RadioButton estMortRadioButton = new RadioButton();
 	private final TextField paysOrigineTextField = new TextField();
 	private final TextField adresseTextField = new TextField();
+	private final TextField pathTextField = new TextField();
 
 
 	// The TableView
@@ -51,7 +56,7 @@ public class TableViewAddDeleteRows extends Application {
 				ArtisteTableUtil.getPaysOrigineColumn(),
 				ArtisteTableUtil.getAdresseColumn());
 
-		GridPane newDataPane  = this.getNewArtisteDataPane();
+		GridPane formDataPane = this.getNewArtisteDataPane();
 
 		Button restoreBtn = new Button("Restore Rows");
 		restoreBtn.setOnAction(e -> restoreRows());
@@ -59,14 +64,16 @@ public class TableViewAddDeleteRows extends Application {
 		Button deleteBtn = new Button("Delete Selected Rows");
 		deleteBtn.setOnAction(e -> deleteSelectedRows());
 
-		VBox root = new VBox(newDataPane, new HBox(restoreBtn, deleteBtn), table);
+		GridPane expImpDataPane = this.getExpImpDataPane();
+
+		VBox root = new VBox(formDataPane, new HBox(restoreBtn, deleteBtn), expImpDataPane, table);
 		root.setSpacing(5);
 		root.setStyle("-fx-padding: 10;" +
 				"-fx-border-style: solid inside;" +
 				"-fx-border-width: 2;" +
 				"-fx-border-insets: 5;" +
 				"-fx-border-radius: 5;" +
-				"-fx-border-color: blue;");
+				"-fx-border-color: #999;");
 
 		Scene scene = new Scene(root);
 		stage.setScene(scene);
@@ -95,6 +102,33 @@ public class TableViewAddDeleteRows extends Application {
 		return pane;
 	}
 
+	public GridPane getExpImpDataPane() {
+		GridPane pane = new GridPane();
+		pane.setHgap(10);
+		pane.setVgap(5);
+		pane.addRow(0, new Label("Path:"), pathTextField);
+		Button exportBtn = new Button("Export");
+		exportBtn.setOnAction(e -> {
+			try {
+				artisteService.exporterVersExcel(pathTextField.getText());
+			} catch (Exception ex) {
+				throw new RuntimeException(ex);
+			}
+		});
+		Button importBtn = new Button("Import");
+		importBtn.setOnAction(e -> {
+			try {
+				artisteService.importerDepuisExcel(pathTextField.getText());
+			} catch (Exception ex) {
+				throw new RuntimeException(ex);
+			}
+		});
+
+		pane.add(exportBtn, 2, 0);
+		pane.add(importBtn, 3, 0);
+		return pane;
+	}
+
 	public void deleteSelectedRows() {
 		TableViewSelectionModel<Artiste> tsm = table.getSelectionModel();
 		if (tsm.isEmpty()) {
@@ -113,7 +147,8 @@ public class TableViewAddDeleteRows extends Application {
 		// Delete rows (last to first)
 		for(int i = selectedIndices.length - 1; i >= 0; i--) {
 			tsm.clearSelection(selectedIndices[i].intValue());
-			table.getItems().remove(selectedIndices[i].intValue());
+			artisteService.remove(table.getItems().get(selectedIndices[i].intValue()));
+			restoreRows();
 		}
 	}
 
@@ -122,18 +157,22 @@ public class TableViewAddDeleteRows extends Application {
 		table.getItems().addAll(ArtisteTableUtil.getArtisteList());
 	}
 
-	public Artiste getArtiste() {
-		return new Artiste(null,nomTextField.getText(),
-				prenomTextField.getText(),
-				java.sql.Date.valueOf(dateNaissancePicker.getValue()),
-				pseudoNomTextField.getText(),
-				estMortRadioButton.isSelected(),
-				paysOrigineTextField.getText(), adresseTextField.getText());
-	}
+
 
 	public void addArtiste() {
-		Artiste p = getArtiste();
-		table.getItems().add(p);
+		String nom = nomTextField.getText();
+		String prenom = prenomTextField.getText();
+		LocalDate dateNaissance = dateNaissancePicker.getValue();
+		String pseudoNom = pseudoNomTextField.getText();
+		boolean estMort = estMortRadioButton.isSelected();
+		String paysOrigine = paysOrigineTextField.getText();
+		String adresse = adresseTextField.getText();
+		java.util.Date dateNaissanceFormatted = java.sql.Date.valueOf(dateNaissance);
+
+		Artiste artiste = new Artiste(null, nom, prenom, dateNaissanceFormatted, pseudoNom, estMort, paysOrigine, adresse);
+
+		artisteService.save(artiste);
+		restoreRows();
 		clearFields();
 	}
 
@@ -145,5 +184,6 @@ public class TableViewAddDeleteRows extends Application {
 		estMortRadioButton.setSelected(false);
 		paysOrigineTextField.clear();
 		adresseTextField.clear();
+		pathTextField.setText("Documents");
 	}
 }

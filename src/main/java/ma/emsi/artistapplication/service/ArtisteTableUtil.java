@@ -6,15 +6,14 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
 import ma.emsi.artistapplication.entities.Artiste;
 
-import java.time.LocalDate;
+import java.util.List;
 import java.util.Date;
 
 public class ArtisteTableUtil {
+	private static ArtisteService artisteService = new ArtisteService();
 	public static ObservableList<Artiste> getArtisteList() {
-		Artiste p1 = new Artiste(1, "Ashwin", "Sharan", new Date(), "Ash", false, "France", "Paris, France");
-		Artiste p2 = new Artiste(2, "Ashwin", "Sharan", new Date(), "Sha", false, "Germany", "Berlin, Germany");
-		Artiste p3 = new Artiste(3, "Ashwin", "Sharan", new Date(), "Ran", false, "UK", "Carddif, UK");
-		return FXCollections.<Artiste>observableArrayList(p1, p2, p3);
+		List<Artiste> artistes = artisteService.findAll();
+		return FXCollections.<Artiste>observableArrayList(artistes);
 	}
 
 	/* Returns Id TableColumn */
@@ -47,7 +46,7 @@ public class ArtisteTableUtil {
 
 	public static TableColumn<Artiste, String> getPseudoNomColumn() {
 		TableColumn<Artiste, String> pseudoNomCol = new TableColumn<>("Pseudo Nom");
-		pseudoNomCol.setCellValueFactory(new PropertyValueFactory<>("pseudonom"));
+		pseudoNomCol.setCellValueFactory(new PropertyValueFactory<>("pseudoNom"));
 		return pseudoNomCol;
 	}
 

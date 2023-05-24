@@ -14,35 +14,34 @@ public class ArtisteService {
 	}
 
 	public void save(Artiste artiste) {
-		
-			artisteDao.insert(artiste);
-		
+		artisteDao.insert(artiste);
+		System.out.println("Artist Saved");
 	}
 	public void update(Artiste artiste) {
-		
-			artisteDao.update(artiste);
-		
+		artisteDao.update(artiste);
+		System.out.println("Artist Updated");
 	}
 	public void remove(Artiste artiste) {
 		artisteDao.deleteById(artiste.getId());
+		System.out.println("Artist Removed");
 	}
-	
-	
-	
-	public void exporterVersExcel(String path) {
-		
+
+
+
+	public void exporterVersExcel(String path) throws Exception {
+		SpreadsheetWrite.export(path);
 	}
-	
-	public void importerDepuisExcel(String path) {
-		
+
+	public void importerDepuisExcel(String path) throws Exception {
+		SpreadsheetRead.importer(path);
 	}
-	
+
 
 	public void exporterVersTxt(String path) {
-		
+
 	}
-	
+
 	public void importerDepuisTxt(String path) {
-		
+
 	}
 }
