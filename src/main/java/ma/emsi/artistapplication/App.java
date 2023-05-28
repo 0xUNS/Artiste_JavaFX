@@ -1,18 +1,11 @@
 package ma.emsi.artistapplication;
-import ma.emsi.artistapplication.entities.Tableau;
-import ma.emsi.artistapplication.service.TableauService;
+import javafx.application.Application;
+import ma.emsi.artistapplication.view.Login;
 
-/**
- * Hello world!
- *
- */
 public class App 
 {
     public static void main( String[] args )
     {
-    	TableauService  tableauService = new TableauService();
-    	for(Tableau tableau :tableauService.findAll())
-    		System.out.println(tableau);
-    //	tableauService.save(new Tableau(null, null, null, null, null, null));
+	    Application.launch(Login.class, args);
     }
 }

@@ -4,6 +4,8 @@ module ma.emsi.artistapplication {
     requires java.sql;
     requires poi;
     requires poi.ooxml;
+	requires com.fasterxml.jackson.databind;
+    requires com.opencsv;
 
 
     opens ma.emsi.artistapplication to javafx.fxml;

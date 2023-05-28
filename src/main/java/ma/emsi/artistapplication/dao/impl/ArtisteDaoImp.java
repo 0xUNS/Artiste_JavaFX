@@ -1,10 +1,6 @@
 package ma.emsi.artistapplication.dao.impl;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,7 +9,7 @@ import ma.emsi.artistapplication.entities.Artiste;
 
 public class ArtisteDaoImp implements ArtisteDao {
 
-	private Connection conn= DB.getConnection();
+	private final Connection conn = DB.getConnection();
 
 	@Override
 	public void insert(Artiste artiste) {
@@ -25,7 +21,7 @@ public class ArtisteDaoImp implements ArtisteDao {
 			ps.setString(1, artiste.getNom());
 			ps.setString(2, artiste.getPrenom());
 			ps.setString(3, artiste.getPseudoNom());
-			ps.setDate(4, new java.sql.Date(artiste.getDateNaissance().getTime()));
+			ps.setDate(4, Date.valueOf(artiste.getDateNaissance()));
 			ps.setBoolean(5, artiste.isEstMort());
 			ps.setString(6, artiste.getPaysOrigine());
 			ps.setString(7, artiste.getAdresse());
@@ -46,7 +42,7 @@ public class ArtisteDaoImp implements ArtisteDao {
 				System.out.println("Aucune ligne renvoyée");
 			}
 		} catch (SQLException e) {
-			System.err.println("problème d'insertion d'un artiste");;
+			System.err.println("problème d'insertion d'un artiste");
 		} finally {
 			DB.closeStatement(ps);
 		}
@@ -62,14 +58,14 @@ public class ArtisteDaoImp implements ArtisteDao {
 			ps.setString(1, artiste.getNom());
 			ps.setString(2, artiste.getPrenom());
 			ps.setString(3, artiste.getPseudoNom());
-			ps.setDate(4, new java.sql.Date(artiste.getDateNaissance().getTime()));
+			ps.setDate(4, Date.valueOf(artiste.getDateNaissance()));
 			ps.setBoolean(5, artiste.isEstMort());
 			ps.setString(6, artiste.getPaysOrigine());
 			ps.setString(7, artiste.getAdresse());
 			ps.setInt(8, artiste.getId());
 			ps.executeUpdate();
 		} catch (SQLException e) {
-			System.err.println("problème de mise à jour d'un artiste");;
+			System.err.println("problème de mise à jour d'un artiste");
 		} finally {
 			DB.closeStatement(ps);
 		}
@@ -86,7 +82,7 @@ public class ArtisteDaoImp implements ArtisteDao {
 			ps.setInt(1, id);
 			ps.executeUpdate();
 		} catch (SQLException e) {
-			System.err.println("problème de suppression d'un artiste");;
+			System.err.println("problème de suppression d'un artiste");
 		} finally {
 			DB.closeStatement(ps);
 		}
@@ -112,7 +108,7 @@ public class ArtisteDaoImp implements ArtisteDao {
 				artiste.setNom(rs.getString("nom"));
 				artiste.setPrenom(rs.getString("prenom"));
 				artiste.setPseudoNom(rs.getString("pseudoNom"));
-				artiste.setDateNaissance(rs.getDate("dateNaissance"));
+				artiste.setDateNaissance(rs.getDate("dateNaissance").toLocalDate());
 				artiste.setEstMort(rs.getBoolean("estMort"));
 				artiste.setPaysOrigine(rs.getString("paysOrigine"));
 				artiste.setAdresse(rs.getString("adresse"));
@@ -123,7 +119,7 @@ public class ArtisteDaoImp implements ArtisteDao {
 
 			return null;
 		} catch (SQLException e) {
-			System.err.println("problème de requête pour trouver un artiste");;
+			System.err.println("problème de requête pour trouver un artiste");
 		return null;
 		} finally {
 			DB.closeResultSet(rs);
@@ -150,7 +146,7 @@ public class ArtisteDaoImp implements ArtisteDao {
 				artiste.setNom(rs.getString("nom"));
 				artiste.setPrenom(rs.getString("prenom"));
 				artiste.setPseudoNom(rs.getString("pseudoNom"));
-				artiste.setDateNaissance(rs.getDate("dateNaissance"));
+				artiste.setDateNaissance(rs.getDate("dateNaissance").toLocalDate());
 				artiste.setEstMort(rs.getBoolean("estMort"));
 				artiste.setPaysOrigine(rs.getString("paysOrigine"));
 				artiste.setAdresse(rs.getString("adresse"));
@@ -160,7 +156,7 @@ public class ArtisteDaoImp implements ArtisteDao {
 
 			return listArtiste;
 		} catch (SQLException e) {
-			System.err.println("problème de requête pour sélectionner un artiste");;
+			System.err.println("problème de requête pour sélectionner un artiste");
 		return null;
 		} finally {
 			DB.closeResultSet(rs);

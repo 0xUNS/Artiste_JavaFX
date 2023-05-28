@@ -1,22 +1,53 @@
 package ma.emsi.artistapplication.service;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Arrays;
-
 import ma.emsi.artistapplication.entities.Artiste;
 import ma.emsi.artistapplication.entities.Tableau;
-import ma.emsi.artistapplication.service.ArtisteService;
-import ma.emsi.artistapplication.service.TableauService;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-public class SpreadsheetWrite {
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
+
+public class SpreadsheetService {
+	static XSSFRow row;
+	public static void sheetRead(XSSFWorkbook workbook, int page){
+		XSSFSheet spreadsheet = workbook.getSheetAt(page);
+		Iterator<Row> rowIterator = spreadsheet.iterator();
+
+		while (rowIterator.hasNext()) {
+			row = (XSSFRow) rowIterator.next();
+			Iterator <Cell>  cellIterator = row.cellIterator();
+
+			while ( cellIterator.hasNext()) {
+				Cell cell = cellIterator.next();
+				System.out.print(cell.toString()+"\t|\t");
+
+			}
+			System.out.println();
+		}
+	}
+	public static void importer(String path) throws Exception {
+		try(FileInputStream fis = new FileInputStream("/home/abc/" + path))
+		{
+			XSSFWorkbook workbook = new XSSFWorkbook(fis);
+			System.out.println("-- ARTISTE --");
+			sheetRead(workbook, 0);
+			System.out.println("-- TABLEAU --");
+			sheetRead(workbook, 1);
+		}
+		catch (FileNotFoundException e) {
+			// TODO: handle exception
+		}
+	}
 	public static void tableauWrite(XSSFWorkbook workbook){
 		XSSFSheet spreadsheet = workbook.createSheet("TABLEAU");
 		XSSFRow row;
@@ -46,9 +77,9 @@ public class SpreadsheetWrite {
 			cell = row.createCell(cellNum++);
 			cell.setCellValue(tableau.getGenre());
 			cell = row.createCell(cellNum++);
-			cell.setCellValue(tableau.getPrix() + " DH");
+			cell.setCellValue(tableau.getPrix());
 			cell = row.createCell(cellNum++);
-			cell.setCellValue(tableau.isEstVendu()? "oui": "non");
+			cell.setCellValue(tableau.isEstVendu());
 			cell = row.createCell(cellNum++);
 			cell.setCellValue(tableau.getDateCreation());
 			cell = row.createCell(cellNum++);
@@ -94,16 +125,15 @@ public class SpreadsheetWrite {
 			cell.setCellValue(artiste.getAdresse());
 		}
 	}
-	public static void export(String path) throws Exception {
+	public static void exporter(String path) throws Exception {
 		XSSFWorkbook workbook = new XSSFWorkbook();
 
 		artisteWrite(workbook);
 		tableauWrite(workbook);
 
-		FileOutputStream out = new FileOutputStream(new File("/home/abc/" + path));
+		FileOutputStream out;
+		out = new FileOutputStream(new File("/home/abc/" + path));
 		workbook.write(out);
 		out.close();
-	}
-	public static void main(String[] args) throws Exception {
 	}
 }

@@ -1,22 +1,22 @@
 package ma.emsi.artistapplication.entities;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.Objects;
 
 public class Artiste implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-
 	private Integer id;
 	private String nom;
 	private String prenom;
-	private Date dateNaissance;
+	private LocalDate dateNaissance;
 	private String pseudoNom;
 	private boolean estMort;
 	private String paysOrigine;
 	private String adresse;
-	public Artiste(Integer id, String nom, String prenom, Date dateNaissance, String pseudoNom, boolean estMort,
+
+	public Artiste(Integer id, String nom, String prenom, LocalDate dateNaissance, String pseudoNom, boolean estMort,
 			String paysOrigine, String adresse) {
 		super();
 		this.id = id;
@@ -46,10 +46,10 @@ public class Artiste implements Serializable {
 	public void setPrenom(String prenom) {
 		this.prenom = prenom;
 	}
-	public Date getDateNaissance() {
+	public LocalDate getDateNaissance() {
 		return dateNaissance;
 	}
-	public void setDateNaissance(Date dateNaissance) {
+	public void setDateNaissance(LocalDate dateNaissance) {
 		this.dateNaissance = dateNaissance;
 	}
 	public String getPseudoNom() {
